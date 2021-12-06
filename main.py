@@ -2,22 +2,22 @@ import random
 import time
 import os
 
-sonicPresent = True
+swordPresent = True
 inventory = []
 
 
 def intro():
-  print("DOCTOR WHO Adventure\n")
-  print("The TARDIS slowly materializes on the planet.")
-  print("\nThe Doctor steps out from the open door.")
+  print("Cat Kingdom Python Adventure\n")
+  print("")
+  print("\n An Excellent Adventure.")
 
 def startPoint():
   print("-------------------")
-  print("The empty field")
+  print("The king's court")
   print("-------------------")
-  print("\nScanning the area, The Doctor sees a cave to the north,")
-  print("a small house to the west and a wall to the east.")
-  print("The TARDIS is behind him to the south")
+  print("\nThe brave knight stands at attention. There is")
+  print("the king in front of him, a locked door to the west and east")
+  print("and the outside door the south")
 
 def myOptions(question, option1,option2, option3, option4):
   print(question)
@@ -46,59 +46,66 @@ def myPath(myChoice, path1,path2,path3,path4):
       goodPath = True
     else:
       print("I'm sorry I don't understand you! ")
-      myChoice = myOptions("\nWhat do you want to explore? ","1) The house","2) The cave","3) Return to TARDIS","")
+      myChoice = input("Please enter only one of the numbers listed: ")
 
-def gotoHouse():
+def gotoKing():
   print("-------------------")
-  print("The Ancient House") 
+  print("The Noble King") 
   print("-------------------")
 
-  if "disruptor" in inventory:
-    print("\nThere is an open and empty chest here.")
-    print("There is nothing else of interest")
+  if "key" in inventory:
+    print("\nYou have all I can give you.")
+    print("Go start your adventure")
   else:
-    print("\nThere is a locked chest here.") 
-    if "sonic" in inventory:
-      print("You use the sonic to open the chest")
-      print("You find a frequency disrupter and pocket it.")
-      inventory.append("disruptor")
-    else:
-      print("You see no way to open it")
-  print("\nYou leave the house")
+    print("\nBrave knight. You need to be equipped for the coming battle")
+    print("Here is a key. Go to the armory and equip yourself")
+    inventory.append("key")
+  print("\nYou bow and leave the king's pressence")
   startPath()
 
 
-def gotoCave():
+def gotoYard():
   print("-------------------")
-  print("The Creepy Cave\n")
+  print("The CourtYard\n")
+  print("-------------------")
+  print("Ahead is the outer gates to the castle")
+  print("Behind is the king's court")
+  choice = myOptions("\nWhat dost thou want to do? ","1) Leave the Outer Gates","2) Return to Castle","","")
+  myPath(choice,gotoLand,startPath, None, None)
+
+def gotoLand():
+  print("You are eaten by a dragon")
+
+def gotoKitchen():
+  print("-------------------")
+  print("The Kitchen\n")
   print("-------------------")
 
-
-def gotoTARDIS():
-  global sonicPresent
+def gotoArmory():
+  global swordPresent
   print("-------------------")
-  print("Inside the TARDIS\n")
+  print("The Armory\n")
   print("-------------------")
-  print("\nThe TARDIS console quietly hums.")
-  if sonicPresent:
-    print("\nYou see your sonic screwdriver.")
-    pickup = input("Do you want to pick it up? (y/n)")
-    if pickup == "y" or pickup == "Y":
-        print("You pick up the sonic and stick it in your pocket")
-        inventory.append("sonic")
-        sonicPresent = False
+  print("\nThe sign of the door reads armory")
+  if "key" in  inventory:
+    print("You open the door and enter")
+    if swordPresent:
+      print("You see a magnificant sword")
+      print("You arm yourself with it")
+      inventory.append("sword")
+      swordPresent = False
     else:
-      print ("Ok. There is nothing else to do.")
+      print ("Their is nothing left in the armory")
   else:
-    print("\nYou see nothing of interest.")
-  print("You leave the TARDIS")
+    print("\nThe door is locked.")
+  print("You step back from the door")
   startPath()
 
 def startPath():
   startPoint()
-  choice = myOptions("\nWhat do you want to explore? ","1) The house","2) The cave","3) Return to TARDIS","")
+  choice = myOptions("\nWhat dost thou want to do? ","1) Approach the King","2) Go to the Armory","3) Go to the Kitchen","4) Exit the Castle")
   print("You chose option: ",choice)
-  myPath(choice,gotoHouse,gotoCave,gotoTARDIS,None)
+  myPath(choice,gotoKing,gotoArmory,gotoKitchen,gotoYard)
 
 intro()
 startPath()
